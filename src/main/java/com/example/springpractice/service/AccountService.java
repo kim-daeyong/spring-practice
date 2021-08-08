@@ -1,5 +1,7 @@
 package com.example.springpractice.service;
 
+import java.util.NoSuchElementException;
+
 import javax.transaction.Transactional;
 
 import com.example.springpractice.entity.Account;
@@ -17,7 +19,20 @@ public class AccountService {
     }
 
     @Transactional
-    public long deposit(long accountId, long amount) {
+    public long depositNonLock(long accountId, long amount) {
+        Account account = accountRepository.findById(accountId)
+                                                .orElseThrow(() -> new NoSuchElementException());
+
+        long currentAmount = account.getBalance() + amount;
+
+        account.setBalance(currentAmount);
+        accountRepository.save(account);
+
+        return currentAmount;
+    }
+
+    @Transactional
+    public long depositLock(long accountId, long amount) {
         Account account = accountRepository.findByAccountId(accountId);
 
         long currentAmount = account.getBalance() + amount;

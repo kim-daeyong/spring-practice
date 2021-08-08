@@ -37,11 +37,26 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void deposit_Concurrency() throws InterruptedException {
+    public void deposit_Concurrency_NonLock() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(100);
         for (int i=0; i < 100; i++) {
             service.execute(() -> {
-                accountService.deposit(accountId, 10);
+                accountService.depositNonLock(accountId, 10);
+                latch.countDown();
+            });
+        }
+        latch.await();
+        Account account = accountRepository.findById(accountId).orElseThrow();
+        assertThat(account.getBalance()).isEqualTo(1000);
+
+    }
+
+    @Test
+    public void deposit_Concurrency_OptimisticLock() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(100);
+        for (int i=0; i < 100; i++) {
+            service.execute(() -> {
+                accountService.depositLock(accountId, 10);
                 latch.countDown();
             });
         }
