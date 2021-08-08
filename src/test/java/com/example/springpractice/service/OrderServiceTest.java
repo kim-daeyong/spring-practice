@@ -37,23 +37,24 @@ public class OrderServiceTest {
     @Autowired
     private ProductService productService;
 
+    private long productId;
+
     @BeforeEach
     public void setUp() {
         Product product = Product.builder().productId(1l).name("yami").count(10001).build();
         productRepository.save(product);
+        productId = product.getProductId();
     }
 
     @Test
-    @Transactional
+    // @Transactional
     public void addOrderTest() throws InterruptedException {
-
-        long productId = 1l;
 
         long orderId = orderService.addOrders(productId);
 
         Order order = orderService.getOrders(orderId);
 
-        long count = order.getProducts().get(0).getCount();
+        long count = productService.getProduct(productId).getCount();
 
         assertThat(order).isNotNull();
         assertThat(count).isEqualTo(10000);
@@ -62,11 +63,7 @@ public class OrderServiceTest {
 
     @Test
     @Transactional
-    public void addOrderTest_Thread() throws InterruptedException {
-
-        long productId = 1l;
-
-        long orderId = 99l;
+    public void addOrderTest_Concurrency() throws InterruptedException {
 
         CountDownLatch latch = new CountDownLatch(100);
         for (int i=0; i < 100; i++) {
@@ -77,35 +74,22 @@ public class OrderServiceTest {
         }
         latch.await();
 
-        Order order = orderService.getOrders(orderId);
-        OrderDto orderDto = order.toOrderDto();
-        long a = orderDto.getProducts().get(0).getCount();
+        long count = productService.getProduct(productId).getCount();
 
-        assertThat(order).isNotNull();
-        assertThat(a).isEqualTo(990);
+        assertThat(count).isEqualTo(990);
 
     }
 
     @Test
     public void deleteOrderTest() throws InterruptedException {
-        long id = 1l;
-
-        orderRepository.deleteById(id);
-
-    }
-
-    @Test
-    public void deleteProductTest() throws InterruptedException {
-        long id = 1l;
-
-        productRepository.deleteById(id);
+        orderRepository.deleteAll();
 
     }
 
     @AfterEach
     public void afterEach() {
         // productRepository.deleteAll();
-        // orderRepository.deleteAll();
+        orderRepository.deleteAll();
     }
 
 }

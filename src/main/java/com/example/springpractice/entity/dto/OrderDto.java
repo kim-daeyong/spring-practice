@@ -2,7 +2,7 @@ package com.example.springpractice.entity.dto;
 
 import java.util.List;
 
-import com.example.springpractice.entity.Product;
+import com.example.springpractice.entity.OrderProduct;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +14,5 @@ public class OrderDto {
     
     private String name;
     
-    private List<ProductDto> products;
+    private List<OrderProduct> orderProducts;
 }

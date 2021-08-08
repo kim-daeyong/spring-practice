@@ -41,7 +41,7 @@ import lombok.ToString;
 public class Order {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderId;
     
     private String name;
@@ -51,17 +51,17 @@ public class Order {
     private LocalDateTime createAt;
 
     @OneToMany(mappedBy = "order")
-    private List<Product> products = new ArrayList<>();
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     public OrderDto toOrderDto() {
-        List<ProductDto> dtos = this.products.stream()
-                                                .map(Product::toProductDto)
-                                                .collect(Collectors.toList());
+        // List<OrderProduct> dtos = this.orderProducts.stream()
+        //                                         .map(Product::toProductDto)
+        //                                         .collect(Collectors.toList());
 
         return OrderDto.builder()
                         .orderId(this.orderId)
                         .name(this.name)
-                        .products(dtos)
+                        .orderProducts(this.orderProducts)
                         .build();
     }
     

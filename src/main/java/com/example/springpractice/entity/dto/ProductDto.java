@@ -1,5 +1,8 @@
 package com.example.springpractice.entity.dto;
 
+import java.util.List;
+
+import com.example.springpractice.entity.OrderProduct;
 import com.example.springpractice.entity.Product;
 
 import lombok.Builder;
@@ -14,6 +17,8 @@ public class ProductDto {
     private String name;
 
     private long count;
+
+    private List<OrderProduct> orderProducts;
 
     public Product toProduct() {
         return Product.builder()

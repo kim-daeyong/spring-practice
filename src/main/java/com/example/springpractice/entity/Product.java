@@ -1,6 +1,8 @@
 package com.example.springpractice.entity;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -42,15 +44,22 @@ public class Product {
 
     private long count;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderId")
-    private Order order;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "orderId")
+    // private Order order;
+    @OneToMany(mappedBy = "product")
+    List<OrderProduct> orderProducts = new ArrayList<>();
 
     public ProductDto toProductDto() {
+        // List<ProductDto> dtos = this.orderProducts.stream()
+        //                                             .map(Product::toProductDto)
+        //                                             .collect(Collectors.toList());
+
         return ProductDto.builder()
                         .productId(this.productId)
                         .name(this.name)
                         .count(this.count)
+                        .orderProducts(orderProducts)
                         .build();
     }
 

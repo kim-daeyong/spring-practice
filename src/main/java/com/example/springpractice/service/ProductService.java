@@ -2,6 +2,7 @@ package com.example.springpractice.service;
 
 import java.util.NoSuchElementException;
 
+import com.example.springpractice.entity.Order;
 import com.example.springpractice.entity.Product;
 import com.example.springpractice.repository.ProductRepository;
 
@@ -27,8 +28,6 @@ public class ProductService {
         Product product = getProduct(id);
 
         product.setCount(product.getCount() - 1);
-
-        productRepository.save(product);
 
         return product;
     }
