@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,8 +51,9 @@ public class Order {
 	@Column(updatable = false)
     private LocalDateTime createAt;
 
+    // @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @OneToMany(mappedBy = "order")
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    private Set<OrderProduct> orderProducts = new LinkedHashSet<>();
 
     public OrderDto toOrderDto() {
         // List<OrderProduct> dtos = this.orderProducts.stream()

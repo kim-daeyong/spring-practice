@@ -1,6 +1,7 @@
 package com.example.springpractice.entity.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.springpractice.entity.OrderProduct;
 
@@ -14,5 +15,5 @@ public class OrderDto {
     
     private String name;
     
-    private List<OrderProduct> orderProducts;
+    private Set<OrderProduct> orderProducts;
 }

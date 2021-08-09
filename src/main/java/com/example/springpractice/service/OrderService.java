@@ -2,7 +2,7 @@ package com.example.springpractice.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
+import java.util.Set;
 
 import com.example.springpractice.entity.Order;
 import com.example.springpractice.entity.OrderProduct;
@@ -40,13 +40,14 @@ public class OrderService {
 
         Order order = Order.builder().name("test").build();
         Product product = productservice.orderProduct(productId);
+        orderRepository.save(order);
+
         OrderProduct orderProduct = OrderProduct.builder().order(order).product(product).build();
 
-        order.setOrderProducts(List.of(orderProduct));
-        product.setOrderProducts(List.of(orderProduct));
+        order.setOrderProducts(Set.of(orderProduct));
+        product.setOrderProducts(Set.of(orderProduct));
 
         orderProductRepository.save(orderProduct);
-        orderRepository.save(order);
 
         return order.getOrderId();
     }

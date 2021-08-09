@@ -15,8 +15,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.example.springpractice.entity.Order;
+import com.example.springpractice.entity.OrderProduct;
 import com.example.springpractice.entity.Product;
 import com.example.springpractice.entity.dto.OrderDto;
+import com.example.springpractice.repository.OrderProductRepository;
 import com.example.springpractice.repository.OrderRepository;
 import com.example.springpractice.repository.ProductRepository;
 
@@ -30,6 +32,9 @@ public class OrderServiceTest {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
 
     @Autowired
     private OrderService orderService;
@@ -47,7 +52,6 @@ public class OrderServiceTest {
     }
 
     @Test
-    // @Transactional
     public void addOrderTest() throws InterruptedException {
 
         long orderId = orderService.addOrders(productId);
@@ -62,7 +66,6 @@ public class OrderServiceTest {
     }
 
     @Test
-    @Transactional
     public void addOrderTest_Concurrency() throws InterruptedException {
 
         CountDownLatch latch = new CountDownLatch(100);
@@ -74,9 +77,13 @@ public class OrderServiceTest {
         }
         latch.await();
 
+        OrderProduct orderProduct = orderProductRepository.findById(100l).orElseThrow();
+
+        long temp = orderProduct.toOrderProductDto().getProductDto().getCount();
+
         long count = productService.getProduct(productId).getCount();
 
-        assertThat(count).isEqualTo(990);
+        assertThat(count).isEqualTo(9901l);
 
     }
 

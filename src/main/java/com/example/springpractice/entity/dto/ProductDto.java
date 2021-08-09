@@ -1,6 +1,7 @@
 package com.example.springpractice.entity.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.springpractice.entity.OrderProduct;
 import com.example.springpractice.entity.Product;
@@ -18,7 +19,7 @@ public class ProductDto {
 
     private long count;
 
-    private List<OrderProduct> orderProducts;
+    private Set<OrderProduct> orderProducts;
 
     public Product toProduct() {
         return Product.builder()

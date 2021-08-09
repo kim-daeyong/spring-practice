@@ -23,9 +23,14 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
     }
 
+    @Transactional(readOnly = true)
+    public Product getProductLock(long id) {
+        return productRepository.findByProductId(id).orElseThrow(() -> new NoSuchElementException());
+    }
+
     @Transactional
     public Product orderProduct(long id) {
-        Product product = getProduct(id);
+        Product product = getProductLock(id);
 
         product.setCount(product.getCount() - 1);
 

@@ -47,8 +47,9 @@ public class Product {
     // @ManyToOne(fetch = FetchType.LAZY)
     // @JoinColumn(name = "orderId")
     // private Order order;
+    // @OneToMany(mappedBy = "product", fetch = FetchType.EAGER) //확실히 너무느림
     @OneToMany(mappedBy = "product")
-    List<OrderProduct> orderProducts = new ArrayList<>();
+    Set<OrderProduct> orderProducts = new LinkedHashSet<>();
 
     public ProductDto toProductDto() {
         // List<ProductDto> dtos = this.orderProducts.stream()
