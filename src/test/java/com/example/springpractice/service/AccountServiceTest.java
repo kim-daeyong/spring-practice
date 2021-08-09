@@ -52,7 +52,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void deposit_Concurrency_OptimisticLock() throws InterruptedException {
+    public void deposit_Concurrency_Lock() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(100);
         for (int i=0; i < 100; i++) {
             service.execute(() -> {

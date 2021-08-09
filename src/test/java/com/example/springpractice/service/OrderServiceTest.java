@@ -89,7 +89,7 @@ public class OrderServiceTest {
     @AfterEach
     public void afterEach() {
         // productRepository.deleteAll();
-        orderRepository.deleteAll();
+        // orderRepository.deleteAll();
     }
 
 }
