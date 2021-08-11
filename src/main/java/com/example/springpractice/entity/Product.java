@@ -32,8 +32,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-@EqualsAndHashCode
+// @ToString
+// @EqualsAndHashCode
 public class Product {
     
     @Id

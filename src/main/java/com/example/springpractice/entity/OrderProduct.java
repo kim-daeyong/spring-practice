@@ -12,9 +12,11 @@ import com.example.springpractice.entity.dto.OrderProductDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Builder
@@ -22,16 +24,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+// @ToString
+// @EqualsAndHashCode
 public class OrderProduct {
 
     @Id @GeneratedValue
     private long id;
 
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
     private Order order;
 
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     private Product product;
 

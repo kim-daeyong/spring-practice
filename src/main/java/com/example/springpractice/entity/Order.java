@@ -36,8 +36,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-@EqualsAndHashCode
+// @ToString
+// @EqualsAndHashCode
 @EntityListeners(AuditingEntityListener.class)
 public class Order {
 
